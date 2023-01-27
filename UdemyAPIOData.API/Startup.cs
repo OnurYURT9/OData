@@ -64,6 +64,8 @@ namespace UdemyAPIOData.API
 
             app.UseEndpoints(endpoints =>
             {
+             
+                endpoints.Select().Expand().OrderBy().MaxTop(null).Count().Filter(); // query option
                 endpoints.MapODataRoute
                 ("odata", "odata", builder.GetEdmModel());
                 endpoints.MapControllers();
