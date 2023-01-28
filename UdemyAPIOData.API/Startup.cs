@@ -49,6 +49,49 @@ namespace UdemyAPIOData.API
             builder.EntitySet<Category>("Categories");
             builder.EntitySet<Product>("Products");
 
+            /*ACTÝONS*/
+
+            //../odata/categories(1)/totalproductprice
+            builder.EntityType<Category>().Action
+                ("TotalProductPrice").Returns<int>();
+            //../odata/categories/totalproductprice
+            builder.EntityType<Category>().Collection.Action
+                ("TotalProductPrice2").Returns<int>();
+
+            //odata/categories/totalproductprice
+
+            builder.EntityType<Category>().Collection.Action
+                ("TotalProductPriceWithParameter").Returns<int>
+                ().Parameter<int>("categoryId");
+
+            var actionTotal = builder.EntityType<Category>().Collection
+                .Action("Total").Returns<int>();
+            actionTotal.Parameter<int>("a");
+            actionTotal.Parameter<int>("b");
+            actionTotal.Parameter<int>("c");
+
+
+            builder.EntityType<Product>().Collection.Action("LoginUser")
+                .Returns<string>().Parameter<Login>("UserLogin");
+
+            /*FUNCTIONS*/
+
+            builder.EntityType<Category>().Collection.Function("CategoryCount").Returns<int>();
+
+            //parametre alan
+            var MultiplyFuntion = builder.EntityType<Product>()
+                .Collection.Function("MultiplyFunction").Returns<int>();
+            MultiplyFuntion.Parameter<int>("a1");
+            MultiplyFuntion.Parameter<int>("a2");
+            MultiplyFuntion.Parameter<int>("a3");
+
+
+            builder.EntityType<Product>().Function("KdvHesapla").Returns<double>().Parameter<double>("KDV");
+
+            builder.Function("GetKdv").Returns<int>();         
+            
+            
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
